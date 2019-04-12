@@ -19,8 +19,8 @@ class HoloHost(Service):
 
             self.logger.info(req_data['tos_agree'])
             insert = text(
-                """insert into holohost(email, tos_agree, created_on) values ('%s', '%r', now()::timestamp without time zone)""" % (
-                    req_data['email'], req_data['tos_agree']))
+                """insert into holohost(email, tos_agree, password, created_on) values ('%s', '%r', '%s', now()::timestamp without time zone)""" % (
+                    req_data['email'], req_data['tos_agree'], req_data['password']))
             with closing(self.outgoing.sql.get(out_name).session()) as session:
                 for result in session.execute(select):
                     self.logger.info('Email already exists %r' % result)
@@ -30,7 +30,7 @@ class HoloHost(Service):
                         ins_result = session.commit()
                         self.logger.info(ins_result)
                         self.response.payload = {
-                            'success' : req_data['email'] + ' is registered as a Holo Host'
+                            'success': req_data['email'] + ' is registered as a Holo Host'
                         }
                     if result[0] == u'1':
                         self.response.payload = {
@@ -38,8 +38,6 @@ class HoloHost(Service):
                         }
         except ZatoException, e:
             self.logger.warn('Caught an exception %s', e.message)
-
-
 
 
 """
@@ -53,4 +51,21 @@ class HoloHost(Service):
 example request
 
 curl -i -X POST proxy.holo.host/holohost/register -d '{"email":"samuel.roseabcd@gmail.com", "tos_agree": true}'
+
+schema
+
+
+                                        Table "public.holohost"
+   Column   |            Type             |                         Modifiers                          
+------------+-----------------------------+------------------------------------------------------------
+ host_id    | integer                     | not null default nextval('holohost_host_id_seq'::regclass)
+ email      | character varying(355)      | not null
+ created_on | timestamp without time zone | not null
+ tos_agree  | boolean                     | 
+ password   | character varying(355)      | 
+Indexes:
+    "holohost_pkey" PRIMARY KEY, btree (host_id)
+    "holohost_email_key" UNIQUE CONSTRAINT, btree (email)
+
+
 """
