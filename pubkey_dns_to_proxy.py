@@ -1,138 +1,75 @@
-addEventListener('fetch', event => {
-    event.respondWith(handleRequest(event.request))
-})
+from zato.server.service import Service
+from json import dumps
+import httplib
 
-const corsOptionHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, HEAD, POST, OPTIONS",
-  'Access-Control-Allow-Headers': 'access-control-allow-headers'
-}
+class PubkeyDnsToProxy(Service):
+    def checkKey(self, d, key):
+        return key in d
 
-function handleOptions(request) {
-  if (request.headers.get("Origin") !== null &&
-      request.headers.get("Access-Control-Request-Method") !== null &&
-      request.headers.get("Access-Control-Request-Headers") !== null) {
-    // Handle CORS pre-flight request.
-    return new Response(null, {
-      headers: corsOptionHeaders
-    })
-  } else {
-    // Handle standard OPTIONS request.
-    return new Response(null, {
-      headers: {
-        "Allow": "GET, HEAD, POST, OPTIONS",
-      }
-    })
-  }
-}
+    def handle(self):
+        # miscellaneous logging
+        self.logger.info(type(self.request.raw_request))
+        self.logger.info(self.request.raw_request)
+        self.logger.info('cid:[{}]'.format(self.cid))
+        # prep data
+        data = self.request.bunchified()
+        # exit if no pubkey incoming
+        if not self.checkKey(data, 'pubkey'):
+            response = {"error": "request must contain a public key"}
+            self.response.status_code = httplib.BAD_REQUEST
+            self.response.payload = dumps(response)
+            return
+        # else
+        # create payload
+        # {"type":"CNAME", "name":"pubkey.holohost.net", "content":"proxy.holohost.net"}
+        domain = data.pubkey + ".holohost.net"
+        payload = {"type":"CNAME", "name":domain, "content":"proxy.holohost.net"}
 
-/**
- * TODO: error checks and responses
- * TODO: Log request and response somewhere???
- * @param {Request} request
- */
-async function handleRequest(request) {
-  if (request.method === "OPTIONS") {
-    return handleOptions(request)
-  } else {
-    let requestHeaders = JSON.stringify([...request.headers], null, 2)
-    //console.log(`Request headers: ${requestHeaders}`)
-    //console.log(new Map(request.headers))
-    //console.log(request.method)
+        # params
+        params = {}
 
-    //console.log(request);
-    let responseObj = {};
-    let responseStatus = 500;
+        # kvdb
+        service = 'zato.kvdb.data-dict.dictionary.get-value-list'
 
-    // Wrap code in try/catch block to return error stack in the response body
-    try {
-        // Check request parameters first
-        if (request.method.toLowerCase() !== 'post') {
-            responseStatus = 400;
-        } else if (request.headers.get("Content-Type") !== 'application/x-www-form-urlencoded') {
-            // application/x-www-form-urlencoded
-            responseStatus = 415;
-        } else {
-            const data = await request.formData();
-            //console.log('formData',data)
-            // get url and prepare
+        request = {'system':'cloudflare', 'key': 'auth_key'}
+        response = self.invoke(service, request)
+        auth_key = response["zato_kvdb_data_dict_dictionary_get_value_list_response"][0]["name"]
+        self.logger.info(auth_key)
 
-            // fix this to error if no URL
-            // URL is REQUIRED
-            const lookupURL = data.get('url');
-            //console.log('lookupURL', lookupURL);
-            if(!lookupURL){
-              responseStatus = 400;
-              URLNoProtocolTrim = "";
-            } else {
-              // trim protocol
-              const URLNoProtocol = lookupURL.replace(/(^\w+:|^)\/\//, '');
-              // trim trailing slash
-              URLNoProtocolTrim = URLNoProtocol.replace(/\/$/, "");
-              //console.log('URLNoProtocolTrim', URLNoProtocolTrim)
-            }
-            const requestObj = {
-                hash: data.get('hash'),
-                url: URLNoProtocolTrim
-            }
-            //console.log("requestObj",requestObj);
+        request = {'system':'cloudflare', 'key': 'auth_email'}
+        response = self.invoke(service, request)
+        auth_email = response["zato_kvdb_data_dict_dictionary_get_value_list_response"][0]["name"]
+        self.logger.info(auth_email)
 
-            responseObj.requestURL = requestObj.url;
 
-            if (!requestObj.hash && !requestObj.url) {
-                responseStatus = 400;
-            } else {
-                // If hash was not passed then find it in the KV store
-                if (!requestObj.hash) {
-                    console.log('hash not sent; getting hash for', requestObj.url)
-                    // get from KV store
-                    responseObj.hash = await DNS2HASH.get(requestObj.url)
-                    if (responseObj.hash === null){
-                      console.log('Value not found for ', requestObj.url)
-                      return new Response("Value not found", {status: 404})
-                    }
-                    //return new Response(responseObj.hash)
-                }
-                console.log('getting tranche for', responseObj.hash)
-                // get value from KV store
-                let hostsArrayJSON = await HASH2TRANCHE.get(responseObj.hash, "json")
-                 console.log("h2", hostsArrayJSON)
-                // set
-                responseObj.hosts = hostsArrayJSON
-                console.log('hosts',responseObj.hosts)
-                console.log('num hosts',responseObj.hosts.length);
-                // randomize hosts
-                let numHosts = responseObj.hosts.length;
-                function getRandomInt(max) {
-                  return Math.floor(Math.random() * Math.floor(max));
-                }
-                let hostNum = getRandomInt(numHosts);
-                //let host = responseObj.hosts[hostNum] + ".holohost.net";
-                let host = responseObj.hosts[hostNum];
-                console.log('host',host);
-                responseObj.hosts = [host];
-                console.log('obj hosts',responseObj.hosts);
-                responseStatus = 200;
-            }
-        }
+        # Headers the endpoint expects
+        headers = {'X-Auth-Email':auth_email, 'X-Auth-Key':auth_key}
 
-        //console.log(headers);
-        //responseObj.requestHeaders = requestHeaders;
-        const init = {
-            status: responseStatus,
-            headers: {
-              'Access-Control-Allow-Origin':'*',
-              'Access-Control-Allow-Methods': 'GET, HEAD, POST, OPTIONS',
-              'Access-Control-Allow-Headers': 'access-control-allow-headers',
-              'Content-Type': 'application/json'
-            }
-        }
-        console.log(responseObj)
-        return new Response(JSON.stringify(responseObj), init);
-    } catch (e) {
-        // Display the error stack.
-        return new Response(e.stack || e)
-    }
+        # Obtains a connection object
+        conn = self.outgoing.plain_http['cloudflare-dns-create-entry'].conn
 
-  }
-}
+        # Invoke the resource providing all the information on input
+        response = conn.post(self.cid, payload, params, headers=headers)
+
+        self.response.payload = dumps(response.json())
+
+        """
+        #response = {"blah": "no errors, blah"}
+        self.response.payload = dumps(response.json())
+        """
+        return
+
+        """
+        if not response.json():
+            self.response.status_code = httplib.NOT_FOUND
+            empty_response = {"email": data.email, "status": "NOT FOUND"}
+            self.response.payload = dumps(empty_response)
+        else:
+            self.response.payload = dumps(response.json())
+        """
+
+"""
+
+uses the following server objects
+
+"""
