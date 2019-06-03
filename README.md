@@ -1,6 +1,6 @@
 # Holo Zato API Documentation
 
-The base address for all Holo Zato services is: 
+The base address for all Holo Zato services is:
 
 `http://proxy.holohost.net/zato/`
 
@@ -17,67 +17,13 @@ The base address for all Holo Zato services is:
 
 
 ### About this document
-The services listed in this document (below) are listed in the order in which the following entries should be made when setting up new routes for new nodes, as follows: 
+The services listed in this document (below) are listed in the order in which the following entries should be made when setting up new routes for new nodes, as follows:
 
-1. holo-cloudflare-dns2hash-create
-1. holo-cloudflare-hash2tranche-create
 1. holo-cloudflare-dns-create
 1. holo-proxy-service-create
 1. holo-proxy-route-create
-
-...
-
-# Cloudflare KV Stores
-
-## holo-cloudflare-dns2hash-create
-
-### Description
-This service accepts a key/value pair which is used to securely create a KV Store entry on Cloudflare via their API.
-
-### HTTP Request
-**Method** `POST http://proxy.holohost.net/zato/holo-cloudflare-dns2hash-create`
-
-### Parameters
-
-| Parameter | Required | Description |
-| -------- | -------- | -------- |
-| kv_key | required | The key to be used.  The key is the domain name which will be used to retrieve the value. |
-| kv_value | required | The value to be paired with the key.  The value is the hApp "bundlehash" from the Holo Hosting hApp. |
-
-### Example
-
-```
-curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-dns2hash-create" \
- -H "Holo-Init: [a_valid_key]" \
- -H "Content-Type: application/json" \
- --data '{"kv_key":"some_key", "kv_value":"some_value"}'
-```
-
-...
-
-## holo-cloudflare-hash2tranche-create
-
-### Description
-This service accepts a key/value pair which is used to securely create a KV Store entry on Cloudflare via their API.
-
-### HTTP Request
-**Method** `POST http://proxy.holohost.net/zato/holo-cloudflare-hash2tranche-create`
-
-### Parameters
-
-| Parameter | Required | Description |
-| -------- | -------- | -------- |
-| kv_key | required | The key to be used. The key is the hApp "bundlehash" from the Holo Hosting hApp.  The key must match the value used in the "dns2hash" Cloudflare KV Store. |
-| kv_value | required | The value to be paired with the key.  The value is an **array** of hosts, each in the form of `*.[pubkey].holohost.net`. |
-
-### Example
-
-```
-curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-hash2tranche-create" \
- -H "Holo-Init: [a_valid_key]" \
- -H "Content-Type: application/json" \
- --data '{"kv_key":"some_key", "kv_value":"some_value"}'
-```
+1. holo-cloudflare-dns2hash-create
+1. holo-cloudflare-hash2tranche-create
 
 ...
 
@@ -154,7 +100,7 @@ This service accepts four values which are used to securely create a "route" ent
 | -------- | -------- | -------- |
 | name | required | The name to be used.  The name should be the **case-sensitive** version of `[pubkey].holohost.net`. (Ex. `HcSCjblAhbLah.holohost.net`). The name **should** match the `name` of the service to which the route is forwarded. |
 | protocols | required | The protocols to be used.  Protocols is an array. Currently `["http","https"]`. |
-| hosts | required | The hosts to be used. Hosts is an array. Each host should be the **lower-case** version of the tranche entry. (Ex. `["*.hcscjblahblah.holohost.net"]`). |
+| hosts | required | The hosts to be used. Hosts is an array. Each host should be the **case-insensitive** version of the tranche entry. (Ex. `["*.hcscjblahblah.holohost.net"]`). |
 | service | required | The service id of the service to which the route is forwarded. (Ex. `53b36017-781d-4381-a299-b0f0a546b4be`).|
 
 ### Example
@@ -164,6 +110,60 @@ curl -X POST "http://proxy.holohost.net/zato/holo-proxy-route-create" \
  -H "Holo-Init: [a_valid_key]" \
  -H "Content-Type: application/json" \
  --data '{"name":"[pubkey].holohost.net", "protocols":["http","https"], "hosts":"10.10.10.1", "service":"53b36017-781d-4381-a299-b0f0a546b4be" }'
+```
+
+...
+
+# Cloudflare KV Stores
+
+## holo-cloudflare-dns2hash-create
+
+### Description
+This service accepts a key/value pair which is used to securely create a KV Store entry on Cloudflare via their API.
+
+### HTTP Request
+**Method** `POST http://proxy.holohost.net/zato/holo-cloudflare-dns2hash-create`
+
+### Parameters
+
+| Parameter | Required | Description |
+| -------- | -------- | -------- |
+| kv_key | required | The key to be used.  The key is the domain name which will be used to retrieve the value. |
+| kv_value | required | The value to be paired with the key.  The value is the hApp "bundlehash" from the Holo Hosting hApp. |
+
+### Example
+
+```
+curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-dns2hash-create" \
+ -H "Holo-Init: [a_valid_key]" \
+ -H "Content-Type: application/json" \
+ --data '{"kv_key":"some_key", "kv_value":"some_value"}'
+```
+
+...
+
+## holo-cloudflare-hash2tranche-create
+
+### Description
+This service accepts a key/value pair which is used to securely create a KV Store entry on Cloudflare via their API.
+
+### HTTP Request
+**Method** `POST http://proxy.holohost.net/zato/holo-cloudflare-hash2tranche-create`
+
+### Parameters
+
+| Parameter | Required | Description |
+| -------- | -------- | -------- |
+| kv_key | required | The key to be used. The key is the hApp "bundlehash" from the Holo Hosting hApp.  The key must match the value used in the "dns2hash" Cloudflare KV Store. |
+| kv_value | required | The value to be paired with the key.  The value is an **array** of hosts, each in the form of `*.[pubkey].holohost.net`. |
+
+### Example
+
+```
+curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-hash2tranche-create" \
+ -H "Holo-Init: [a_valid_key]" \
+ -H "Content-Type: application/json" \
+ --data '{"kv_key":"some_key", "kv_value":"some_value"}'
 ```
 
 ...
