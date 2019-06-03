@@ -47,7 +47,7 @@ class HoloDnsPubkeyCnameToProxy(Service):
 
         # create payload
         # {"type":"CNAME", "name":"pubkey.holohost.net", "content":"proxy.holohost.net"}
-        domain = data.pubkey + ".holohost.net"
+        domain = "*." + data.pubkey + ".holohost.net"
         payload = {"type":"CNAME", "name":domain, "content":"proxy.holohost.net"}
 
         # Obtains a connection object

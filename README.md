@@ -154,7 +154,7 @@ This service accepts four values which are used to securely create a "route" ent
 | -------- | -------- | -------- |
 | name | required | The name to be used.  The name should be the **case-sensitive** version of `[pubkey].holohost.net`. (Ex. `HcSCjblAhbLah.holohost.net`). The name **should** match the `name` of the service to which the route is forwarded. |
 | protocols | required | The protocols to be used.  Protocols is an array. Currently `["http","https"]`. |
-| hosts | required | The hosts to be used. Hosts is an array. Each host should be the **case-insensitive** version of the tranche entry. (Ex. `["*.hcscjblahblah.holohost.net"]`). |
+| hosts | required | The hosts to be used. Hosts is an array. Each host should be the **lower-case** version of the tranche entry. (Ex. `["*.hcscjblahblah.holohost.net"]`). |
 | service | required | The service id of the service to which the route is forwarded. (Ex. `53b36017-781d-4381-a299-b0f0a546b4be`).|
 
 ### Example
