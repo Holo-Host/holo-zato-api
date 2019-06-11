@@ -109,7 +109,7 @@ This service accepts four values which are used to securely create a "route" ent
 curl -X POST "http://proxy.holohost.net/zato/holo-proxy-route-create" \
  -H "Holo-Init: [a_valid_key]" \
  -H "Content-Type: application/json" \
- --data '{"name":"[pubkey].holohost.net", "protocols":["http","https"], "hosts":"10.10.10.1", "service":"53b36017-781d-4381-a299-b0f0a546b4be" }'
+ --data '{"name":"[pubkey].holohost.net", "protocols":["http","https"], "hosts":["*.pubkey.holohost.net"], "service":"53b36017-781d-4381-a299-b0f0a546b4be" }'
 ```
 
 ...
