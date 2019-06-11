@@ -16,8 +16,9 @@ The base address for all Holo Zato services is:
   * Authentication can be obtained from the HoloCentral team.
 
 
-### About this document
-The services listed in this document (below) are listed in the order in which the following entries should be made when setting up new routes for new nodes, as follows:
+### Services for Creating New Full Routes
+
+The following services are listed in the order in which the following entries should be made when setting up new routes for new hosts, as follows:
 
 1. holo-cloudflare-dns-create
 1. holo-proxy-service-create
