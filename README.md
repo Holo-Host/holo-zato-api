@@ -32,7 +32,7 @@ The services listed in this document (below) are listed in the order in which th
 ## holo-cloudflare-dns-create
 
 ### Description
-This service accepts a public key which is used to securely create a DNS entry on Cloudflare via their API.  Currently, `.holohost.net` is appended to the public key to create the fully qualified domain name for the DNS entry.
+This service accepts a public key which is used to securely create a DNS entry on Cloudflare via their API.  Currently, `*.` is prepended & `.holohost.net` is appended to the public key to create the fully qualified domain name for the DNS entry.
 
 ### HTTP Request
 **Method** `POST http://proxy.holohost.net/zato/holo-cloudflare-dns-create`
@@ -47,6 +47,31 @@ This service accepts a public key which is used to securely create a DNS entry o
 
 ```
 curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-dns-create" \
+ -H "Holo-Init: [a_valid_key]" \
+ -H "Content-Type: application/json" \
+ --data '{"pubkey":"something"}'
+```
+
+...
+
+## holo-cloudflare-dns-delete
+
+### Description
+This service accepts a public key which is used to securely delete a DNS entry on Cloudflare via their API.  Currently, `*.` is prepended & `.holohost.net` is appended to the public key to create the fully qualified domain name for the DNS entry.
+
+### HTTP Request
+**Method** `POST http://proxy.holohost.net/zato/holo-cloudflare-dns-delete`
+
+### Parameters
+
+| Parameter | Required | Description |
+| -------- | -------- | -------- |
+| pubkey | required | A public key to be used as the basis for the DNS deletion. |
+
+### Example
+
+```
+curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-dns-delete" \
  -H "Holo-Init: [a_valid_key]" \
  -H "Content-Type: application/json" \
  --data '{"pubkey":"something"}'
