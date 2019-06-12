@@ -55,33 +55,39 @@ class HoloDnsDelete(Service):
         conn = self.outgoing.plain_http['cloudflare-dns-read'].conn
 
         # Invoke the resource providing all the information on input
-        response = conn.get(self.cid, params, headers=headers)
-        response_dict = response.json()
-        domain_id = response_dict["result"][0]["id"]
-
-        # ---------------- Part Two -------------------- #
-        # DELETE domain by id
-
-        # params
-        params = {"zone":zone, "record_id":domain_id}
-
-        # Obtains a connection object
-        conn = self.outgoing.plain_http['cloudflare-dns-delete'].conn
-
-        # Invoke the resource providing all the information on input
-        response = conn.delete(self.cid, params, headers=headers)
-
-        # if no response
-        """
-        if not response:
-            response = {"error": "no response"}
-            self.response.status_code = httplib.BAD_GATEWAY
+        try:
+            response = conn.get(self.cid, params, headers=headers)
+            response_dict = response.json()
+            domain_id = response_dict["result"][0]["id"]
+        except:
+            response = {"error": "something broke"}
+            self.response.status_code = httplib.BAD_GATEWAY # 502
             self.response.payload = dumps(response)
             return
+        else:
+            # ---------------- Part Two -------------------- #
+            # DELETE domain by id
+
+            # params
+            params = {"zone":zone, "record_id":domain_id}
+
+            # Obtains a connection object
+            conn = self.outgoing.plain_http['cloudflare-dns-delete'].conn
+
+            # Invoke the resource providing all the information on input
+            response = conn.delete(self.cid, params, headers=headers)
+
+            # if no response
             """
-        # else
-        self.response.payload = dumps(response.json())
-        return
+            if not response:
+                response = {"error": "no response"}
+                self.response.status_code = httplib.BAD_GATEWAY # 502
+                self.response.payload = dumps(response)
+                return
+                """
+            # else
+            self.response.payload = dumps(response.json())
+            return
 
 """
 

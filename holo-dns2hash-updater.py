@@ -60,7 +60,7 @@ class HoloDns2HashUpdater(Service):
         """
         if not response:
             response = {"error": "no response"}
-            self.response.status_code = httplib.BAD_GATEWAY
+            self.response.status_code = httplib.BAD_GATEWAY # 502
             self.response.payload = dumps(response)
             return
             """
