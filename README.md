@@ -140,6 +140,33 @@ curl -X POST "http://proxy.holohost.net/zato/holo-proxy-route-create" \
 
 ...
 
+## holo-proxy-route-delete
+
+### Description
+This service accepts one value which is used to securely delete a "route" entry on the Holo proxy server via the proxy API.
+
+
+### HTTP Request
+**Method** `POST http://proxy.holohost.net/zato/holo-proxy-route-delete`
+
+### Parameters
+
+| Parameter | Required | Description |
+| -------- | -------- | -------- |
+| name | required | The name to be used.  If the route was created correctly (see above), then the name should be the **case-sensitive** version of `[pubkey].holohost.net`. (Ex. `HcSCjblAhbLah.holohost.net`). The name **should** match the `name` of the service to which the route is forwarded. |
+
+### Example
+
+```
+curl -X POST "http://proxy.holohost.net/zato/holo-proxy-route-delete" \
+ -H "Holo-Init: [a_valid_key]" \
+ -H "Content-Type: application/json" \
+ --data '{"name":"[pubkey].holohost.net"}'
+```
+
+...
+
+
 # Cloudflare KV Stores
 
 ## holo-cloudflare-dns2hash-create
