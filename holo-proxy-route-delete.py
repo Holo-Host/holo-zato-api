@@ -2,7 +2,7 @@ from zato.server.service import Service
 from json import dumps
 import httplib
 
-class HoloProxyRouteCreate(Service):
+class HoloProxyRouteDelete(Service):
     def checkKey(self, d, key):
         return key in d
 
@@ -19,39 +19,15 @@ class HoloProxyRouteCreate(Service):
             self.response.status_code = httplib.BAD_REQUEST
             self.response.payload = dumps(response)
             return
-        if not self.checkKey(data, 'protocols'):
-            response = {"error": "request must contain protocols array"}
-            self.response.status_code = httplib.BAD_REQUEST
-            self.response.payload = dumps(response)
-            return
-        if not self.checkKey(data, 'hosts'):
-            response = {"error": "request must contain hosts array"}
-            self.response.status_code = httplib.BAD_REQUEST
-            self.response.payload = dumps(response)
-            return
-        if not self.checkKey(data, 'service'):
-            response = {"error": "request must contain a service"}
-            self.response.status_code = httplib.BAD_REQUEST
-            self.response.payload = dumps(response)
-            return
-
         # else
 
         # Obtains a connection object
-        conn = self.outgoing.plain_http['holo-proxy-route-create'].conn
+        conn = self.outgoing.plain_http['holo-proxy-route-delete'].conn
 
-        # Invoke the resource providing all the information on input
-        # -- for testing. this GET returns all routes
-        # response = conn.get(self.cid)
-        # -- for real
-        # payload is name, protocols, hosts, service id
-        # {"name":"pubkey.holohost.net","protocols":["http","https"], "hosts":["pubkey.holohost.net"], "service":"e311425e-3f56-4e70-84c7-fb1790a60316"}
-        name = data.name
-        protocols = data.protocols
-        hosts = data.hosts
-        service = data.service
-        payload = {"name":name, "protocols":protocols, "hosts":hosts, "service":{"id":service} }
-        response = conn.post(self.cid, payload)
+        # payload
+        name = data.name + "blah"
+        payload = {"name":name} }
+        response = conn.delete(self.cid, payload)
         # if no response
         """
         if not response:
@@ -68,7 +44,7 @@ class HoloProxyRouteCreate(Service):
 
 uses the following server objects
 
-outconn:holo-proxy-route-create:
+outconn:holo-proxy-route-delete:
     http://localhost:8001
     /routes/
     Kong proxy
