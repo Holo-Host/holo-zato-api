@@ -274,3 +274,30 @@ curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-hash2tranche-create
 
 ...
 
+
+## holo-cloudflare-hash2tranche-delete
+
+### Description
+This service accepts a key which is used to securely delete a KV Store entry on Cloudflare via their API.
+
+### HTTP Request
+**Method** `POST http://proxy.holohost.net/zato/holo-cloudflare-hash2tranche-delete`
+
+### Parameters
+
+| Parameter | Required | Description |
+| -------- | -------- | -------- |
+| kv_key | required | The key to be used. The key (in hash2tranche) is the hApp "bundlehash" from the Holo Hosting hApp. |
+
+### Example
+
+```
+curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-hash2tranche-delete" \
+ -H "Holo-Init: [a_valid_key]" \
+ -H "Content-Type: application/json" \
+ --data '{"kv_key":"some_key"}'
+```
+
+...
+
+
