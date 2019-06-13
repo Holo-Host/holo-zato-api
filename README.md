@@ -111,6 +111,33 @@ curl -X POST "http://proxy.holohost.net/zato/holo-proxy-service-create" \
 ...
 
 
+## holo-proxy-service-delete
+
+### Description
+This service accepts one value which is used to securely delete a "service" entry on the Holo proxy server via the proxy API.
+
+
+### HTTP Request
+**Method** `POST http://proxy.holohost.net/zato/holo-proxy-service-delete`
+
+### Parameters
+
+| Parameter | Required | Description |
+| -------- | -------- | -------- |
+| name | required | The name to be used.  If the service was created correctly (see above), then the name should be the **case-sensitive** version of `[pubkey].holohost.net`. (Ex. `HcSCjblAhbLah.holohost.net`).|
+
+### Example
+
+```
+curl -X POST "http://proxy.holohost.net/zato/holo-proxy-service-delete" \
+ -H "Holo-Init: [a_valid_key]" \
+ -H "Content-Type: application/json" \
+ --data '{"name":"[pubkey].holohost.net"}'
+```
+
+...
+
+
 ## holo-proxy-route-create
 
 ### Description
