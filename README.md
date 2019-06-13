@@ -222,6 +222,32 @@ curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-dns2hash-create" \
 
 ...
 
+
+## holo-cloudflare-dns2hash-delete
+
+### Description
+This service accepts a key which is used to securely delete a KV Store entry on Cloudflare via their API.
+
+### HTTP Request
+**Method** `POST http://proxy.holohost.net/zato/holo-cloudflare-dns2hash-delete`
+
+### Parameters
+
+| Parameter | Required | Description |
+| -------- | -------- | -------- |
+| kv_key | required | The key to be used.  The key (in dns2hash) is the domain name. |
+
+### Example
+
+```
+curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-dns2hash-delete" \
+ -H "Holo-Init: [a_valid_key]" \
+ -H "Content-Type: application/json" \
+ --data '{"kv_key":"some_key"}'
+```
+
+...
+
 ## holo-cloudflare-hash2tranche-create
 
 ### Description
