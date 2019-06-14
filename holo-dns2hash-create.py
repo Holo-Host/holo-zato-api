@@ -52,7 +52,7 @@ class HoloDns2HashCreate(Service):
         payload = data.kv_value
 
         # Obtains a connection object
-        conn = self.outgoing.plain_http['cloudflare-kvstore-dns2hash-add'].conn
+        conn = self.outgoing.plain_http['cloudflare-kvstore-dns2hash-create'].conn
 
         # Invoke the resource providing all the information on input
         response = conn.put(self.cid, payload, params, headers=headers)
@@ -72,7 +72,7 @@ class HoloDns2HashCreate(Service):
 
 uses the following server objects
 
-outconn:cloudflare-kvstore-dns2hash-add:
+outconn:cloudflare-kvstore-dns2hash-create:
     https://api.cloudflare.com
     /client/v4/accounts/{account}/storage/kv/namespaces/{namespace}/values/{kv_key}
     Cloudflare API
