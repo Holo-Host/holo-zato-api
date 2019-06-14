@@ -99,7 +99,7 @@ outconn:cloudflare-dns-read:
 
 outconn:cloudflare-dns-delete:
     https://api.cloudflare.com
-    /client/v4/zones/{zone}/dns_records
+    /client/v4/zones/{zone}/dns_records/{record_id}
     Cloudflare API
 
 """
