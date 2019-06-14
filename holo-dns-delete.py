@@ -1,7 +1,6 @@
 from zato.server.service import Service
 from json import dumps
 import httplib
-import json
 
 class HoloDnsDelete(Service):
     def checkKey(self, d, key):
