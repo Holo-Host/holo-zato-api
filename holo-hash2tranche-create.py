@@ -2,7 +2,7 @@ from zato.server.service import Service
 from json import dumps
 import httplib
 
-class HoloDns2HashUpdater(Service):
+class HoloHash2TrancheCreate(Service):
     def checkKey(self, d, key):
         return key in d
 
@@ -43,7 +43,7 @@ class HoloDns2HashUpdater(Service):
 
         account = self.kvdb_get( 'cloudflare', 'account' )
         self.logger.info(account)
-        namespace = self.kvdb_get( 'cloudflare', 'kvstore_dns2hash' )
+        namespace = self.kvdb_get( 'cloudflare', 'kvstore_hash2tranche' )
         self.logger.info(namespace)
         kv_key = data.kv_key
         # params
