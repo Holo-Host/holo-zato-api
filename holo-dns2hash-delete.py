@@ -29,6 +29,15 @@ class HoloDns2HashDelete(Service):
             self.response.payload = dumps(response)
             return
 
+        # --- CRUCIAL --- #
+        # exit if kv_key is empty
+        # OR ELSE you will DELETE the entire KV store on Cloudflare
+        if not data.kv_key:
+            response = {"error": "kv_key value must not be empty"}
+            self.response.status_code = httplib.BAD_REQUEST
+            self.response.payload = dumps(response)
+            return
+
         auth_email = self.kvdb_get( 'cloudflare', 'auth_email' )
         self.logger.info(auth_email)
         auth_key = self.kvdb_get( 'cloudflare', 'auth_key' )
