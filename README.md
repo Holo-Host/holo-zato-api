@@ -301,3 +301,28 @@ curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-hash2tranche-delete
 ...
 
 
+## holo-cloudflare-kvstore-list-keys
+
+### Description
+This service accepts a KV Store namespace name which is used to securely retrieve and list a KV Store's keys from Cloudflare via their API.
+
+### HTTP Request
+**Method** `POST http://proxy.holohost.net/zato/holo-cloudflare-list-keys`
+
+### Parameters
+
+| Parameter | Required | Description |
+| -------- | -------- | -------- |
+| kv_store | required | The kv store to be retrieved. |
+
+### Example
+
+```
+curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-kvstore-list-keys" \
+ -H "Holo-Init: [a_valid_key]" \
+ -H "Content-Type: application/json" \
+ --data '{"kv_store":"kv_store_name"}'
+```
+
+...
+
