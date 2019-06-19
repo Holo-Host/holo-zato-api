@@ -326,3 +326,29 @@ curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-kvstore-list-keys" 
 
 ...
 
+## holo-cloudflare-kvstore-get-value
+
+### Description
+This service accepts a KV Store namespace name and a key which are used to securely retrieve a KV Store value from Cloudflare via their API.
+
+### HTTP Request
+**Method** `POST http://proxy.holohost.net/zato/holo-cloudflare-get-value`
+
+### Parameters
+
+| Parameter | Required | Description |
+| -------- | -------- | -------- |
+| kv_store | required | The kv store to be used. |
+| kv_key | required | The key to be used. |
+
+### Example
+
+```
+curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-kvstore-get-value" \
+ -H "Holo-Init: [a_valid_key]" \
+ -H "Content-Type: application/json" \
+ --data '{"kv_store":"kv_store_name","kv_key":"some_key"}'
+```
+
+...
+
