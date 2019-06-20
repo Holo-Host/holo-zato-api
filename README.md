@@ -106,6 +106,36 @@ curl -X GET "http://proxy.holohost.net/zato/holo-cloudflare-dns-list" \
 ...
 
 
+## holo-cloudflare-dns-read
+
+### Description
+This service accepts one value which is used to retrieve a DNS entry from Cloudflare via their API.
+
+
+**NOTE:  This service is hard-coded to retrieve the DNS entries only for the `holohost.net` zone.**
+
+
+### HTTP Request
+**Method** `POST http://proxy.holohost.net/zato/holo-cloudflare-dns-read`
+
+### Parameters
+
+| Parameter | Required | Description |
+| -------- | -------- | -------- |
+| record_id | required | The dns record to be retrieved.|
+
+### Example
+
+```
+curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-dns-read" \
+ -H "Holo-Init: [a_valid_key]" \
+ -H "Content-Type: application/json" \
+ --data '{"record_id":"[a_valid_dns_record_id]}'
+```
+
+...
+
+
 # Proxy Routing
 
 ## holo-proxy-service-create
@@ -194,7 +224,7 @@ This service accepts one value which is used to retrieve a "service" entry from 
 
 
 ### HTTP Request
-**Method** `GET http://proxy.holohost.net/zato/holo-proxy-service-read`
+**Method** `POST http://proxy.holohost.net/zato/holo-proxy-service-read`
 
 ### Parameters
 
@@ -205,7 +235,7 @@ This service accepts one value which is used to retrieve a "service" entry from 
 ### Example
 
 ```
-curl -X GET "http://proxy.holohost.net/zato/holo-proxy-service-read" \
+curl -X POST "http://proxy.holohost.net/zato/holo-proxy-service-read" \
  -H "Holo-Init: [a_valid_key]"
  -H "Content-Type: application/json" \
  --data '{"route_id":"[a_valid_service_id]}'
@@ -298,7 +328,7 @@ curl -X GET "http://proxy.holohost.net/zato/holo-proxy-route-list" \
 This service accepts one value which is used to retrieve a "route" entry from the Holo proxy server via the proxy API.
 
 ### HTTP Request
-**Method** `GET http://proxy.holohost.net/zato/holo-proxy-route-read`
+**Method** `POST http://proxy.holohost.net/zato/holo-proxy-route-read`
 
 ### Parameters
 
@@ -309,7 +339,7 @@ This service accepts one value which is used to retrieve a "route" entry from th
 ### Example
 
 ```
-curl -X GET "http://proxy.holohost.net/zato/holo-proxy-route-read" \
+curl -X POST "http://proxy.holohost.net/zato/holo-proxy-route-read" \
  -H "Holo-Init: [a_valid_key]"
  -H "Content-Type: application/json" \
  --data '{"route_id":"[a_valid_route_id]}'
