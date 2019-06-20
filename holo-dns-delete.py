@@ -51,7 +51,7 @@ class HoloDnsDelete(Service):
         params = {"zone":zone, "type":dtype, "domain":domain}
 
         # Obtains a connection object
-        conn = self.outgoing.plain_http['cloudflare-dns-read'].conn
+        conn = self.outgoing.plain_http['cloudflare-dns-by-name'].conn
 
         # Invoke the resource providing all the information on input
         try:
