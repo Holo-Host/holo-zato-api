@@ -265,6 +265,33 @@ curl -X GET "http://proxy.holohost.net/zato/holo-proxy-route-list" \
 ...
 
 
+## holo-proxy-route-read
+
+### Description
+This service accepts one value which is used to retrieve a "route" entry from the Holo proxy server via the proxy API.
+
+
+### HTTP Request
+**Method** `GET http://proxy.holohost.net/zato/holo-proxy-route-list`
+
+### Parameters
+
+| Parameter | Required | Description |
+| -------- | -------- | -------- |
+| route_id | required | The route to be retrieved.|
+
+### Example
+
+```
+curl -X GET "http://proxy.holohost.net/zato/holo-proxy-route-read" \
+ -H "Holo-Init: [a_valid_key]"
+ -H "Content-Type: application/json" \
+ --data '{"route_id":"[a_valid_route_id]}'
+```
+  
+...
+
+
 # Cloudflare KV Stores
 
 ## holo-cloudflare-dns2hash-create
