@@ -236,7 +236,7 @@ This service accepts one value which is used to retrieve a "service" entry from 
 
 ```
 curl -X POST "http://proxy.holohost.net/zato/holo-proxy-service-read" \
- -H "Holo-Init: [a_valid_key]"
+ -H "Holo-Init: [a_valid_key]" \
  -H "Content-Type: application/json" \
  --data '{"route_id":"[a_valid_service_id]}'
 ```
@@ -340,7 +340,7 @@ This service accepts one value which is used to retrieve a "route" entry from th
 
 ```
 curl -X POST "http://proxy.holohost.net/zato/holo-proxy-route-read" \
- -H "Holo-Init: [a_valid_key]"
+ -H "Holo-Init: [a_valid_key]" \
  -H "Content-Type: application/json" \
  --data '{"route_id":"[a_valid_route_id]}'
 ```
