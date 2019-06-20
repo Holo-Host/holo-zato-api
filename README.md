@@ -80,6 +80,32 @@ curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-dns-delete" \
 
 ...
 
+
+## holo-cloudflare-dns-list
+
+### Description
+This service retrieves the DNS entries from Cloudflare via their API.
+
+**NOTE:  This service is hard-coded to retrieve the DNS entries only for the `holohost.net` zone.**
+
+
+### HTTP Request
+**Method** `GET http://proxy.holohost.net/zato/holo-cloudflare-dns-list`
+
+### Parameters
+
+None
+
+### Example
+
+```
+curl -X GET "http://proxy.holohost.net/zato/holo-cloudflare-dns-list" \
+ -H "Holo-Init: [a_valid_key]"
+```
+
+...
+
+
 # Proxy Routing
 
 ## holo-proxy-service-create
