@@ -193,6 +193,28 @@ curl -X POST "http://proxy.holohost.net/zato/holo-proxy-route-delete" \
 
 ...
 
+## holo-proxy-route-list
+
+### Description
+This service retrieves the "route" entries from the Holo proxy server via the proxy API.
+
+
+### HTTP Request
+**Method** `GET http://proxy.holohost.net/zato/holo-proxy-route-list`
+
+### Parameters
+
+None
+
+### Example
+
+```
+curl -X GET "http://proxy.holohost.net/zato/holo-proxy-route-list" \
+ -H "Holo-Init: [a_valid_key]"
+```
+
+...
+
 
 # Cloudflare KV Stores
 
