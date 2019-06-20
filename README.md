@@ -187,6 +187,33 @@ curl -X GET "http://proxy.holohost.net/zato/holo-proxy-service-list" \
 ...
 
 
+## holo-proxy-service-read
+
+### Description
+This service accepts one value which is used to retrieve a "service" entry from the Holo proxy server via the proxy API.
+
+
+### HTTP Request
+**Method** `GET http://proxy.holohost.net/zato/holo-proxy-service-read`
+
+### Parameters
+
+| Parameter | Required | Description |
+| -------- | -------- | -------- |
+| service_id | required | The service to be retrieved.|
+
+### Example
+
+```
+curl -X GET "http://proxy.holohost.net/zato/holo-proxy-service-read" \
+ -H "Holo-Init: [a_valid_key]"
+ -H "Content-Type: application/json" \
+ --data '{"route_id":"[a_valid_service_id]}'
+```
+  
+...
+
+
 ## holo-proxy-route-create
 
 ### Description
@@ -270,9 +297,8 @@ curl -X GET "http://proxy.holohost.net/zato/holo-proxy-route-list" \
 ### Description
 This service accepts one value which is used to retrieve a "route" entry from the Holo proxy server via the proxy API.
 
-
 ### HTTP Request
-**Method** `GET http://proxy.holohost.net/zato/holo-proxy-route-list`
+**Method** `GET http://proxy.holohost.net/zato/holo-proxy-route-read`
 
 ### Parameters
 
