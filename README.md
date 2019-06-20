@@ -138,6 +138,29 @@ curl -X POST "http://proxy.holohost.net/zato/holo-proxy-service-delete" \
 ...
 
 
+## holo-proxy-service-list
+
+### Description
+This service retrieves the "service" entries from the Holo proxy server via the proxy API.
+
+
+### HTTP Request
+**Method** `GET http://proxy.holohost.net/zato/holo-proxy-service-list`
+
+### Parameters
+
+None
+
+### Example
+
+```
+curl -X GET "http://proxy.holohost.net/zato/holo-proxy-service-list" \
+ -H "Holo-Init: [a_valid_key]"
+```
+
+...
+
+
 ## holo-proxy-route-create
 
 ### Description
