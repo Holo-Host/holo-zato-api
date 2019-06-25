@@ -1,6 +1,6 @@
 Feature: holo zato api holo-cloudflare-dns-list
 
-Scenario: *** Holo zato api GET list ***
+Scenario: *** Holo zato api GET dns list ***
 
     Given address "http://proxy.holohost.net"
     Given URL path "/zato/holo-cloudflare-dns-list"
