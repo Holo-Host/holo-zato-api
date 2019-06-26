@@ -363,7 +363,7 @@ This service accepts a key/value pair which is used to securely create a KV Stor
 | Parameter | Required | Description |
 | -------- | -------- | -------- |
 | kv_key | required | The key to be used.  The key is the domain name which will be used to retrieve the value. |
-| kv_value | required | The value to be paired with the key.  The value is the hApp "bundlehash" from the Holo Hosting hApp. |
+| kv_value | required | The value to be paired with the key.  The value is the hApp "holoHostingId" from the Holo Hosting hApp. |
 
 ### Example
 
@@ -414,8 +414,8 @@ This service accepts a key/value pair which is used to securely create a KV Stor
 
 | Parameter | Required | Description |
 | -------- | -------- | -------- |
-| kv_key | required | The key to be used. The key is the hApp "bundlehash" from the Holo Hosting hApp.  The key must match the value used in the "dns2hash" Cloudflare KV Store. |
-| kv_value | required | The value to be paired with the key.  The value is an **array** of hosts, each in the form of `*.[pubkey].holohost.net`. |
+| kv_key | required | The key to be used. The key is the hApp "holoHostingId" from the Holo Hosting hApp.  The key must match the value used in the "dns2hash" Cloudflare KV Store. |
+| kv_value | required | The value to be paired with the key.  The value is an **array** of hosts, each in the form of `[pubkey].holohost.net`. |
 
 ### Example
 
@@ -423,7 +423,7 @@ This service accepts a key/value pair which is used to securely create a KV Stor
 curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-hash2tranche-create" \
  -H "Holo-Init: [a_valid_key]" \
  -H "Content-Type: application/json" \
- --data '{"kv_key":"some_key", "kv_value":["*.[pubkey].holohost.net"]}'
+ --data '{"kv_key":"some_key", "kv_value":["[pubkey].holohost.net", "etc."]}'
 ```
 
 ...
@@ -441,7 +441,7 @@ This service accepts a key which is used to securely delete a KV Store entry on 
 
 | Parameter | Required | Description |
 | -------- | -------- | -------- |
-| kv_key | required | The key to be used. The key (in hash2tranche) is the hApp "bundlehash" from the Holo Hosting hApp. |
+| kv_key | required | The key to be used. The key (in hash2tranche) is the hApp "holoHostingId" from the Holo Hosting hApp. |
 
 ### Example
 
