@@ -1,4 +1,4 @@
-# Holo Zato API Documentation
+# Holo Zato API Documentation For Developers
 
 The base address for all Holo Zato services is:
 
