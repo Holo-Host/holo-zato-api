@@ -11,7 +11,7 @@ The base address for all Holo Zato services is:
 
 * Authentication
 
-  * Holo Zato API services require authentication.  You must **pass in a correct `Holo-Init` authentication header**.
+  * Holo Zato API services require authentication.  You must **pass in a correct authentication header**.
   * Authentication for upstream APIs is already **handled by Zato internally**.
   * Authentication can be obtained from the HoloCentral team.
 
@@ -48,7 +48,7 @@ This service accepts a public key which is used to securely create a DNS entry o
 
 ```
 curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-dns-create" \
- -H "Holo-Init: [a_valid_key]" \
+ -H "[a_header]: [a_valid_key]" \
  -H "Content-Type: application/json" \
  --data '{"pubkey":"something"}'
 ```
@@ -73,7 +73,7 @@ This service accepts a public key which is used to securely delete a DNS entry o
 
 ```
 curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-dns-delete" \
- -H "Holo-Init: [a_valid_key]" \
+ -H "[a_header]: [a_valid_key]" \
  -H "Content-Type: application/json" \
  --data '{"pubkey":"something"}'
 ```
@@ -100,7 +100,7 @@ None
 
 ```
 curl -X GET "http://proxy.holohost.net/zato/holo-cloudflare-dns-list" \
- -H "Holo-Init: [a_valid_key]"
+ -H "[a_header]: [a_valid_key]"
 ```
 
 ...
@@ -128,7 +128,7 @@ This service accepts one value which is used to retrieve a DNS entry from Cloudf
 
 ```
 curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-dns-read" \
- -H "Holo-Init: [a_valid_key]" \
+ -H "[a_header]: [a_valid_key]" \
  -H "Content-Type: application/json" \
  --data '{"record_id":"[a_valid_dns_record_id]}'
 ```
@@ -159,7 +159,7 @@ This service accepts four values which are used to securely create a "service" e
 
 ```
 curl -X POST "http://proxy.holohost.net/zato/holo-proxy-service-create" \
- -H "Holo-Init: [a_valid_key]" \
+ -H "[a_header]: [a_valid_key]" \
  -H "Content-Type: application/json" \
  --data '{"name":"[pubkey].holohost.net", "protocol":"http", "host":"10.10.10.1", "port":48080}'
 ```
@@ -186,7 +186,7 @@ This service accepts one value which is used to securely delete a "service" entr
 
 ```
 curl -X POST "http://proxy.holohost.net/zato/holo-proxy-service-delete" \
- -H "Holo-Init: [a_valid_key]" \
+ -H "[a_header]: [a_valid_key]" \
  -H "Content-Type: application/json" \
  --data '{"name":"[pubkey].holohost.net"}'
 ```
@@ -211,7 +211,7 @@ None
 
 ```
 curl -X GET "http://proxy.holohost.net/zato/holo-proxy-service-list" \
- -H "Holo-Init: [a_valid_key]"
+ -H "[a_header]: [a_valid_key]"
 ```
 
 ...
@@ -236,7 +236,7 @@ This service accepts one value which is used to retrieve a "service" entry from 
 
 ```
 curl -X POST "http://proxy.holohost.net/zato/holo-proxy-service-read" \
- -H "Holo-Init: [a_valid_key]" \
+ -H "[a_header]: [a_valid_key]" \
  -H "Content-Type: application/json" \
  --data '{"route_id":"[a_valid_service_id]}'
 ```
@@ -266,7 +266,7 @@ This service accepts four values which are used to securely create a "route" ent
 
 ```
 curl -X POST "http://proxy.holohost.net/zato/holo-proxy-route-create" \
- -H "Holo-Init: [a_valid_key]" \
+ -H "[a_header]: [a_valid_key]" \
  -H "Content-Type: application/json" \
  --data '{"name":"[pubkey].holohost.net", "protocols":["http","https"], "hosts":["*.[pubkey].holohost.net"], "service":"53b36017-781d-4381-a299-b0f0a546b4be" }'
 ```
@@ -292,7 +292,7 @@ This service accepts one value which is used to securely delete a "route" entry 
 
 ```
 curl -X POST "http://proxy.holohost.net/zato/holo-proxy-route-delete" \
- -H "Holo-Init: [a_valid_key]" \
+ -H "[a_header]: [a_valid_key]" \
  -H "Content-Type: application/json" \
  --data '{"name":"[pubkey].holohost.net"}'
 ```
@@ -316,7 +316,7 @@ None
 
 ```
 curl -X GET "http://proxy.holohost.net/zato/holo-proxy-route-list" \
- -H "Holo-Init: [a_valid_key]"
+ -H "[a_header]: [a_valid_key]"
 ```
 
 ...
@@ -340,7 +340,7 @@ This service accepts one value which is used to retrieve a "route" entry from th
 
 ```
 curl -X POST "http://proxy.holohost.net/zato/holo-proxy-route-read" \
- -H "Holo-Init: [a_valid_key]" \
+ -H "[a_header]: [a_valid_key]" \
  -H "Content-Type: application/json" \
  --data '{"route_id":"[a_valid_route_id]}'
 ```
@@ -369,7 +369,7 @@ This service accepts a key/value pair which is used to securely create a KV Stor
 
 ```
 curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-dns2hash-create" \
- -H "Holo-Init: [a_valid_key]" \
+ -H "[a_header]: [a_valid_key]" \
  -H "Content-Type: application/json" \
  --data '{"kv_key":"some_key", "kv_value":"some_value"}'
 ```
@@ -395,7 +395,7 @@ This service accepts a key which is used to securely delete a KV Store entry on 
 
 ```
 curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-dns2hash-delete" \
- -H "Holo-Init: [a_valid_key]" \
+ -H "[a_header]: [a_valid_key]" \
  -H "Content-Type: application/json" \
  --data '{"kv_key":"some_key"}'
 ```
@@ -421,7 +421,7 @@ This service accepts a key/value pair which is used to securely create a KV Stor
 
 ```
 curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-hash2tranche-create" \
- -H "Holo-Init: [a_valid_key]" \
+ -H "[a_header]: [a_valid_key]" \
  -H "Content-Type: application/json" \
  --data '{"kv_key":"some_key", "kv_value":["[pubkey].holohost.net", "etc."]}'
 ```
@@ -447,7 +447,7 @@ This service accepts a key which is used to securely delete a KV Store entry on 
 
 ```
 curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-hash2tranche-delete" \
- -H "Holo-Init: [a_valid_key]" \
+ -H "[a_header]: [a_valid_key]" \
  -H "Content-Type: application/json" \
  --data '{"kv_key":"some_key"}'
 ```
@@ -473,7 +473,7 @@ This service accepts a KV Store namespace name which is used to securely retriev
 
 ```
 curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-kvstore-list-keys" \
- -H "Holo-Init: [a_valid_key]" \
+ -H "[a_header]: [a_valid_key]" \
  -H "Content-Type: application/json" \
  --data '{"kv_store":"kv_store_name"}'
 ```
@@ -499,7 +499,7 @@ This service accepts a KV Store namespace name and a key which are used to secur
 
 ```
 curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-kvstore-get-value" \
- -H "Holo-Init: [a_valid_key]" \
+ -H "[a_header]: [a_valid_key]" \
  -H "Content-Type: application/json" \
  --data '{"kv_store":"kv_store_name","kv_key":"some_key"}'
 ```
