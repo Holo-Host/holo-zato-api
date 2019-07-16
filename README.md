@@ -136,6 +136,37 @@ curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-dns-read" \
 ...
 
 
+## holo-cloudflare-dns-customer-create
+
+### Description
+This service accepts a domain name which is used to securely create a DNS entry on Cloudflare via their API.  Currently, the incoming "name" is prepended & `.holohost.net` is appended to the public key to create the fully qualified domain name for the DNS entry.
+
+The **purpose** for this service is for developers to create domain entries that are **CNAME**d to `loader.holohost.net` !
+
+### HTTP Request
+**Method** `POST http://proxy.holohost.net/zato/holo-cloudflare-dns-customer-create`
+
+### Parameters
+
+| Parameter | Required | Description |
+| -------- | -------- | -------- |
+| type | required | record type: usually CNAME |
+| name | required | subdomain to be used.  It will be prepended to `holohost.net` |
+| content | required | where the dns points to.  For Holo `holohost.net` CNAMEs it will be `loader.holohost.net` |
+
+### Example
+
+```
+curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-dns-customer-create" \
+ -H "[a_header]: [a_valid_key]" \
+ -H "Content-Type: application/json" \
+ --data '{"type":"CNAME", "name":"asdf","content":"loader.holohost.net"}'
+```
+
+...
+
+
+
 # Proxy Routing
 
 ## holo-proxy-service-create
