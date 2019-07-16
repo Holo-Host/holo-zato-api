@@ -166,6 +166,32 @@ curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-dns-customer-create
 ...
 
 
+## holo-cloudflare-dns-customer-delete
+
+### Description
+This service accepts a domain name which is used to securely delete a DNS entry on Cloudflare via their API.  Currently, the incoming "name" is prepended to `.holohost.net` to create the fully qualified domain name for the DNS entry.
+
+### HTTP Request
+**Method** `POST http://proxy.holohost.net/zato/holo-cloudflare-dns-customer-delete`
+
+### Parameters
+
+| Parameter | Required | Description |
+| -------- | -------- | -------- |
+| domain | required | subdomain to be used.  It will be prepended to `holohost.net` |
+
+### Example
+
+```
+curl -X POST "http://proxy.holohost.net/zato/holo-cloudflare-dns-customer-delete" \
+ -H "[a_header]: [a_valid_key]" \
+ -H "Content-Type: application/json" \
+ --data '{"domain":"asdf"}'
+```
+
+...
+
+
 
 # Proxy Routing
 
