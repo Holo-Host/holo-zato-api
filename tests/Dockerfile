@@ -13,4 +13,4 @@ RUN apt-get install -y \
 
 RUN pip install zato-apitest
 
-COPY ./tests /tests
+COPY . /tests

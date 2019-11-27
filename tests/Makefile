@@ -1,13 +1,11 @@
-SHELL		= bash
+SHELL = bash
 
-.PHONY: all test build 
+.PHONY: all build test
 
 all: build test
 
-
 build:
-	sudo docker build -t holo-zato-apitest .
+	sudo docker build -t holo-zato-api-tests .
 
-# test -- rebuild the Dockerfile and run the tests
 test:
-	sudo docker run --env-file=./env holo-zato-apitest  apitest run /tests
+	sudo docker run --env-file=./env holo-zato-api-tests apitest run /tests
